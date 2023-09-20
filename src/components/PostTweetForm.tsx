@@ -61,7 +61,6 @@ export default function PostTweetForm() {
   const [isLoading, setLoading] = useState(false)
   const [tweet, setTweet] = useState('')
   const [file, setFile] = useState<File | null>(null)
-  const [uploadError, setUploadError] = useState(false)
   
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTweet(e.target.value)
@@ -96,7 +95,7 @@ export default function PostTweetForm() {
       })
 
       if(file) {
-        const locationRef = ref(storeage, `tweets/${user.uid}-${user.displayName}/${doc.id}`)
+        const locationRef = ref(storeage, `tweets/${user.uid}/${doc.id}`)
         const result = await uploadBytes(locationRef, file)
         const url = await getDownloadURL(result.ref)
         await updateDoc(doc, {
